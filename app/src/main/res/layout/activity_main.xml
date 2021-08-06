@@ -6,6 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.ekn.gruzer.gaugelibrary.HalfGauge
+        android:id="@+id/halfGauge"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/frequency"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.867" />
+
+    <TextView
+        android:id="@+id/centsabs3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/probability"
+        app:layout_constraintVertical_bias="0.522" />
+
+    <TextView
+        android:id="@+id/centsabs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/probability"
+        app:layout_constraintVertical_bias="0.238" />
+
+    <TextView
+        android:id="@+id/centsabs2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/probability"
+        app:layout_constraintVertical_bias="0.37" />
+
     <TextView
         android:id="@+id/frequency"
         android:layout_width="wrap_content"
@@ -14,7 +58,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.633" />
 
     <TextView
         android:id="@+id/probability"
@@ -29,37 +74,27 @@
         app:layout_constraintVertical_bias="0.109" />
 
     <TextView
-        android:id="@+id/centsabs"
+        android:id="@+id/noteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="note"
+        android:textSize="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/halfGauge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/probability"
-        app:layout_constraintVertical_bias="0.128" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/centsabs2"
+        android:id="@+id/octaveTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/probability"
-        app:layout_constraintVertical_bias="0.22" />
-
-    <TextView
-        android:id="@+id/centsabs3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/probability"
-        app:layout_constraintVertical_bias="0.323" />
+        android:text="5"
+        android:textSize="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/halfGauge"
+        app:layout_constraintStart_toEndOf="@+id/noteTextView"
+        app:layout_constraintTop_toTopOf="@+id/noteTextView"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

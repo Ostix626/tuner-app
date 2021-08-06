@@ -48,4 +48,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     compile 'com.lbbento.pitchup:tuner:1.0.0'
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.github.Gruzer:simple-gauge-android:0.3.1'
 }

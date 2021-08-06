@@ -2,6 +2,7 @@ package com.example.tuner
 
 
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.AudioFormat
 import android.media.AudioRecord
 import android.media.MediaRecorder
@@ -20,10 +21,13 @@ import be.tarsos.dsp.pitch.PitchDetectionHandler
 import be.tarsos.dsp.pitch.PitchProcessor
 import be.tarsos.dsp.pitch.PitchProcessor.PitchEstimationAlgorithm
 import be.tarsos.dsp.util.PitchConverter
+import com.ekn.gruzer.gaugelibrary.Range
 import com.lbbento.pitchuptuner.GuitarTuner
 import com.lbbento.pitchuptuner.GuitarTunerListener
 import com.lbbento.pitchuptuner.audio.PitchAudioRecorder
 import com.lbbento.pitchuptuner.service.TunerResult
+import io.reactivex.rxkotlin.toSingle
+import java.util.*
 import java.util.Collections.frequency
 
 
@@ -31,7 +35,12 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_RECORD_CODE = 0
     private var freqText : TextView? = null
     private var probText : TextView? = null
+    private var noteText : TextView? = null
+    private var octaveText : TextView? = null
+    private var halfGauge : com.ekn.gruzer.gaugelibrary.HalfGauge? = null
 
+
+    private val tunningString : String = ""
     private val allNotes = arrayOf("A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#")
     private val concertPitch = 440
     private val SCALE = ChromaticScale.values()
@@ -47,6 +56,53 @@ class MainActivity : AppCompatActivity() {
         setPermission()
         freqText = findViewById(R.id.frequency)
         probText = findViewById(R.id.probability)
+        halfGauge = findViewById(R.id.halfGauge)
+        noteText = findViewById(R.id.noteTextView)
+        octaveText = findViewById(R.id.octaveTextView)
+
+        val range_red_L = Range()
+        range_red_L.color = Color.parseColor("#ce0000")
+        range_red_L.from = -50.0
+        range_red_L.to = -25.0
+
+        val range_red_R = Range()
+        range_red_R.color = Color.parseColor("#ce0000")
+        range_red_R.from = 25.0
+        range_red_R.to = 50.0
+
+        val range_blue_L = Range()
+        range_blue_L.color = Color.parseColor("#E3E500")
+        range_blue_L.from = -25.0
+        range_blue_L.to = -5.0
+
+        val range_blue_R = Range()
+        range_blue_R.color = Color.parseColor("#E3E500")
+        range_blue_R.from = 5.0
+        range_blue_R.to = 25.0
+
+        val range_green_L = Range()
+        range_green_L.color = Color.parseColor("#00b20b")
+        range_green_L.from = -5.0
+        range_green_L.to = 0.0
+
+        val range_green_R = Range()
+        range_green_R.color = Color.parseColor("#00b20b")
+        range_green_R.from = 0.0
+        range_green_R.to = 5.0
+
+        //add color ranges to gauge
+        halfGauge?.addRange(range_red_L)
+        halfGauge?.addRange(range_red_R)
+        halfGauge?.addRange(range_blue_L)
+        halfGauge?.addRange(range_blue_R)
+        halfGauge?.addRange(range_green_L)
+        halfGauge?.addRange(range_green_R)
+
+        //set min max and current value
+        halfGauge?.minValue = -50.0
+        halfGauge?.maxValue = 50.0
+        halfGauge?.value = 0.0
+
     }
 
     private fun setPermission() {
@@ -102,10 +158,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun addElement(arr: Array<ChromaticScale>, element: ChromaticScale): Array<ChromaticScale> {
+        val mutableArray = arr.toMutableList()
+        mutableArray.add(element)
+        return mutableArray.toTypedArray()
+    }
+
     private fun record()
     {
         val dispatcher = fromDefaultMicrophone(22050, 1024, 0)
 
+
+        var tunningList : List<String>? = listOf(
+            "C0", "Db0", "D0", "Eb0", "E0", "F0", "Gb0", "G0", "Ab0", "A0", "Bb0", "B0",
+            "C1", "Db1", "D1", "Eb1", "E1", "F1", "Gb1", "G1", "Ab1", "A1", "Bb1", "B1",
+            "C2", "Db2", "D2", "Eb2", "E2", "F2", "Gb2", "G2", "Ab2", "A2", "Bb2", "B2",
+            "C3", "Db3", "D3", "Eb3", "E3", "F3", "Gb3", "G3", "Ab3", "A3", "Bb3", "B3",
+            "C4", "Db4", "D4", "Eb4", "E4", "F4", "Gb4", "G4", "Ab4", "A4", "Bb4", "B4",
+            "C5", "Db5", "D5", "Eb5", "E5", "F5", "Gb5", "G5", "Ab5", "A5", "Bb5", "B5",
+            "C6", "Db6", "D6", "Eb6", "E6", "F6", "Gb6", "G6", "Ab6", "A6", "Bb6", "B6",
+            "C7", "Db7", "D7", "Eb7", "E7", "F7", "Gb7", "G7", "Ab7", "A7", "Bb7", "B7",
+        )
+//        var tunningScale : List<String>? = null
+//        var test : ArrayList<ChromaticScale>? = null
+
+        if (tunningString.length > 0)
+        {
+            tunningList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+            Log.d("LIST", tunningList.toString())
+        }
+
+
+//        Log.d("SCALE", test.toString())
         val pdh = PitchDetectionHandler { result, e ->
             val probability = result.probability
             val pitchInHz = result.pitch
@@ -113,22 +197,40 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 if(probability > 0.92)
                 {
-                    for (i in 1..SCALE_SIZE-1)
+                    if (tunningList != null)
                     {
-//                        Log.d("frekv", SCALE[i-1].frequency.toString())
-//                        Log.d("frekv", SCALE[i].frequency.toString())
-                        if (SCALE[i-1].frequency <= pitchInHz && pitchInHz <= SCALE[i].frequency )
+                        val listSize = tunningList.size
+                        for (i in 1..listSize-1)
                         {
-                            if (pitchInHz - SCALE[i-1].frequency < SCALE[i].frequency - pitchInHz)
-                                curent_tone = SCALE[i-1]
-                            else
-                                curent_tone = SCALE[i]
-
-//                            tone_name = SCALE[i-1].name
-//                            curent_tone = SCALE[i-1]
-                            break
+                            ChromaticScale.valueOf(tunningList[i-1]).frequency
+                            if (ChromaticScale.valueOf(tunningList[i-1]).frequency <= pitchInHz && pitchInHz <= ChromaticScale.valueOf(tunningList[i]).frequency )
+                            {
+                                if (pitchInHz - ChromaticScale.valueOf(tunningList[i-1]).frequency < ChromaticScale.valueOf(tunningList[i]).frequency - pitchInHz)
+                                    curent_tone = ChromaticScale.valueOf(tunningList[i-1])
+                                else
+                                    curent_tone = ChromaticScale.valueOf(tunningList[i])
+                                break
+                            }
                         }
+
                     }
+
+
+//                    for (i in 1..SCALE_SIZE-1)
+//                    {
+//                        if (SCALE[i-1].frequency <= pitchInHz && pitchInHz <= SCALE[i].frequency )
+//                        {
+//                            if (pitchInHz - SCALE[i-1].frequency < SCALE[i].frequency - pitchInHz)
+//                                curent_tone = SCALE[i-1]
+//                            else
+//                                curent_tone = SCALE[i]
+//
+//                            break
+//                        }
+//                    }
+
+
+
 //                    for (f : ChromaticScale in ChromaticScale.values())
 //                    {
 //                        if (pitchInHz >)
@@ -136,9 +238,12 @@ class MainActivity : AppCompatActivity() {
 //                    }
 //                    Log.d("SCALE>>>", ChromaticScale.C0.toString())
                     val centsabs = PitchConverter.hertzToAbsoluteCent(pitchInHz.toDouble())
-//                    val centsrel = PitchConverter.hertzToRelativeCent(pitchInHz.toDouble())
-                    val centsrel = curent_tone?.name
+                    val centsrel = PitchConverter.hertzToRelativeCent(pitchInHz.toDouble())
+//                    val centsrel = curent_tone?.name
                     val ratiocent = PitchConverter.ratioToCent((pitchInHz / curent_tone?.frequency!!).toDouble())
+                    noteText?.text = curent_tone?.tone
+                    octaveText?.text = curent_tone?.octave.toString()
+                    halfGauge?.value = ratiocent
                     freqText?.text = pitchInHz.toString() + "Hz"
                     probText?.text = "Probability: " + probability.toString()
                     val abs : TextView = findViewById(R.id.centsabs)
