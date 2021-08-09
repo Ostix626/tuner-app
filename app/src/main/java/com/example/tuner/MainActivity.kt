@@ -1,6 +1,7 @@
 package com.example.tuner
 
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.media.AudioFormat
@@ -27,6 +28,7 @@ import com.lbbento.pitchuptuner.GuitarTunerListener
 import com.lbbento.pitchuptuner.audio.PitchAudioRecorder
 import com.lbbento.pitchuptuner.service.TunerResult
 import io.reactivex.rxkotlin.toSingle
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import java.util.Collections.frequency
 
@@ -59,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         halfGauge = findViewById(R.id.halfGauge)
         noteText = findViewById(R.id.noteTextView)
         octaveText = findViewById(R.id.octaveTextView)
+
+        chooseTunningButton.setOnClickListener {
+            startActivity(Intent(this@MainActivity, NavActivity::class.java))
+        }
 
         val range_red_L = Range()
         range_red_L.color = Color.parseColor("#ce0000")

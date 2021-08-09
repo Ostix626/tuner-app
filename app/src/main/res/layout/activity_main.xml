@@ -96,5 +96,17 @@
         app:layout_constraintTop_toTopOf="@+id/noteTextView"
         app:layout_constraintVertical_bias="1.0" />
 
+    <Button
+        android:id="@+id/chooseTunningButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="24dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/centsabs3" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
