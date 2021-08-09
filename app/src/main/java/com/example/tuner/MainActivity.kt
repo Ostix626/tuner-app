@@ -185,6 +185,7 @@ class MainActivity : AppCompatActivity() {
         if (tunningString.length > 0)
         {
             tunningList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+            // TODO: NAPISAT ABECEDNI SORT LISTE
             Log.d("LIST", tunningList.toString())
         }
 
