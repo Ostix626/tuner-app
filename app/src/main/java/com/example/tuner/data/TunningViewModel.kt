@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 @InternalCoroutinesApi
 class TunningViewModel (application: Application) : AndroidViewModel(application) {
-    private val readAllData: LiveData<List<Tunning>>
+    val readAllData: LiveData<List<Tunning>>
     private var repository: TunningRepository? = null
 
     init {

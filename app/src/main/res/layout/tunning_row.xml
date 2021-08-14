@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/tunningItem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/item_border"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="30dp"
+        android:paddingBottom="3dp"
+        >
+
+        <TextView
+            android:id="@+id/tunningNameItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="26dp"
+            android:text="STANDARD"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold"
+        />
+
+        <TextView
+            android:id="@+id/tonesItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="22dp"
+            android:text="E1 A D G B E"
+            android:textColor="@color/white"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>
