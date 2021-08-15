@@ -69,11 +69,7 @@ class MainActivity : AppCompatActivity() {
         tunningTonesText = findViewById(R.id.tunningTonesTV)
 
 
-        //shared preferences
-        val name: String? = intent.getStringExtra("tunning_name")
-        val tones: String? = intent.getStringExtra("tunning_tones")
-        tunningNameText?.text = name
-        tunningTonesText?.text = tones
+
 
         chooseTunningButton.setOnClickListener {
             startActivity(Intent(this@MainActivity, NavActivity::class.java))
@@ -273,7 +269,11 @@ class MainActivity : AppCompatActivity() {
                     val ratio : TextView = findViewById(R.id.centsabs3)
                     ratio?.text = "ratio> " + ratiocent.toString()
 
-
+                    //shared preferences
+                    val name: String? = intent.getStringExtra("tunning_name")
+                    val tones: String? = intent.getStringExtra("tunning_tones")
+                    tunningNameText?.text = name
+                    tunningTonesText?.text = tones
                 }
                 else if ( pitchInHz < 0)
                 {

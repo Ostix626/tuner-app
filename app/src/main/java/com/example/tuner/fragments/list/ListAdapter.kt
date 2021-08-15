@@ -4,8 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tuner.MainActivity
@@ -17,12 +15,18 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var tunningList = emptyList<Tunning>()
 
-    class MyViewHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
+    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.tunning_row, parent, false))
+        return MyViewHolder(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.tunning_row,
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -39,6 +43,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
             val intent = Intent(holder.itemView.context, MainActivity::class.java)
             intent.putExtra("tunning_name", currentItem.tunningName)
             intent.putExtra("tunning_tones", currentItem.tunningTones)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             holder.itemView.context.startActivity(intent)
         }
 
