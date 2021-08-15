@@ -1,9 +1,12 @@
-package com.example.tuner.data
+package com.example.tuner.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.tuner.data.TunningDatabase
+import com.example.tuner.model.Tunning
+import com.example.tuner.repository.TunningRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -18,9 +21,16 @@ class TunningViewModel (application: Application) : AndroidViewModel(application
         repository = TunningRepository(tunningDao)
         readAllData = repository?.readAllData!!
     }
+
     fun addTunning(tunning: Tunning) {
         viewModelScope.launch ( Dispatchers.IO ) {
             repository?.addTunning(tunning)
+        }
+    }
+
+    fun updateTunning(tunning: Tunning) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository?.updateTunning(tunning)
         }
     }
 }

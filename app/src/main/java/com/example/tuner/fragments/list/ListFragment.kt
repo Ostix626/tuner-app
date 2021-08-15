@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tuner.R
-import com.example.tuner.data.TunningViewModel
+import com.example.tuner.viewmodel.TunningViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
 

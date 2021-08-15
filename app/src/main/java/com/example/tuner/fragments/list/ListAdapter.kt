@@ -1,12 +1,12 @@
 package com.example.tuner.fragments.list
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tuner.R
-import com.example.tuner.data.Tunning
+import com.example.tuner.model.Tunning
 import kotlinx.android.synthetic.main.tunning_row.view.*
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
@@ -26,6 +26,10 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
         val currentItem = tunningList[position]
         holder.itemView.tunningNameItem.text = currentItem.tunningName
         holder.itemView.tonesItem.text = currentItem.tunningTones
+        holder.itemView.tunningItem.setOnClickListener {
+            val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
+            holder.itemView.findNavController().navigate(action)
+        }
 
 //        holder.itemView.setOnClickListener(View.OnClickListener {
 //             val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()

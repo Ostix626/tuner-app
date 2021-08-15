@@ -10,8 +10,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.tuner.R
-import com.example.tuner.data.Tunning
-import com.example.tuner.data.TunningViewModel
+import com.example.tuner.model.Tunning
+import com.example.tuner.viewmodel.TunningViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 import kotlinx.coroutines.InternalCoroutinesApi
