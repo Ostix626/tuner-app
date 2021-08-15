@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/tunningItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -9,10 +9,12 @@
     android:padding="5dp">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/editTunningButton"
         android:orientation="vertical"
-        android:paddingHorizontal="30dp"
+        android:paddingLeft="30dp"
         android:paddingBottom="3dp"
         >
 
@@ -21,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textSize="26dp"
+            android:textSize="22dp"
             android:text="STANDARD"
             android:textColor="@color/teal_200"
             android:textStyle="bold"
@@ -32,11 +34,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textSize="22dp"
+            android:textSize="20dp"
             android:text="E1 A D G B E"
             android:textColor="@color/white"
         />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/editTunningButton"
+        android:layout_width="75dp"
+        android:layout_height="55dp"
+        android:src="@drawable/edit_icon"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:paddingHorizontal="20dp"
+        app:tint="@color/teal_200" />
 
 </RelativeLayout>

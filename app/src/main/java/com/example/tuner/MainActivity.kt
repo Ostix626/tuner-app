@@ -40,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     private var noteText : TextView? = null
     private var octaveText : TextView? = null
     private var halfGauge : com.ekn.gruzer.gaugelibrary.HalfGauge? = null
+    private var tunningNameText : TextView? = null
+    private var tunningTonesText : TextView? = null
 
 
     private val tunningString : String = ""
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity() {
 
     private var isInitailized = false
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -61,6 +65,15 @@ class MainActivity : AppCompatActivity() {
         halfGauge = findViewById(R.id.halfGauge)
         noteText = findViewById(R.id.noteTextView)
         octaveText = findViewById(R.id.octaveTextView)
+        tunningNameText = findViewById(R.id.tunningNameTV)
+        tunningTonesText = findViewById(R.id.tunningTonesTV)
+
+
+        //shared preferences
+        val name: String? = intent.getStringExtra("tunning_name")
+        val tones: String? = intent.getStringExtra("tunning_tones")
+        tunningNameText?.text = name
+        tunningTonesText?.text = tones
 
         chooseTunningButton.setOnClickListener {
             startActivity(Intent(this@MainActivity, NavActivity::class.java))
@@ -259,6 +272,8 @@ class MainActivity : AppCompatActivity() {
                     rel?.text = "rel> " + centsrel.toString()
                     val ratio : TextView = findViewById(R.id.centsabs3)
                     ratio?.text = "ratio> " + ratiocent.toString()
+
+
                 }
                 else if ( pitchInHz < 0)
                 {

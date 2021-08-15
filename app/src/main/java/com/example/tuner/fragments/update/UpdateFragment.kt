@@ -1,11 +1,10 @@
 package com.example.tuner.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -39,8 +38,14 @@ class UpdateFragment : Fragment() {
         view.updateTunningButton.setOnClickListener {
             updateItem()
         }
+        // add menu
+        setHasOptionsMenu(true)
+
+
         return view
     }
+
+
 
     @InternalCoroutinesApi
     private fun updateItem()
@@ -67,5 +72,32 @@ class UpdateFragment : Fragment() {
 
     private fun inputCheck(tunningName : String, tunningTones : String) : Boolean {
         return !(TextUtils.isEmpty(tunningName) && TextUtils.isEmpty(tunningTones))
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    @InternalCoroutinesApi
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == R.id.menu_delete) {
+            deleteTunning()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    @InternalCoroutinesApi
+    private fun deleteTunning() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") {_, _ ->
+            mTunningViewModel.deleteTunning(args.currentTunning)
+            Toast.makeText(requireContext(), "Successfully removed: ${args.currentTunning.tunningName}", Toast.LENGTH_SHORT)
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        builder.setNegativeButton("No") {_, _ -> }
+        builder.setTitle("Delete ${args.currentTunning.tunningName}?")
+        builder.setMessage("Are you sure you want to delete ${args.currentTunning.tunningTones} tunning?")
+        builder.create().show()
     }
 }

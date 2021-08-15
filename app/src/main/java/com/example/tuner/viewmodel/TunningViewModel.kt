@@ -33,4 +33,16 @@ class TunningViewModel (application: Application) : AndroidViewModel(application
             repository?.updateTunning(tunning)
         }
     }
+
+    fun deleteTunning(tunning: Tunning) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository?.deleteTunning(tunning)
+        }
+    }
+
+    fun deleteAllTunnings() {
+        viewModelScope.launch (Dispatchers.IO) {
+            repository?.deleteAllTunnings()
+        }
+    }
 }
