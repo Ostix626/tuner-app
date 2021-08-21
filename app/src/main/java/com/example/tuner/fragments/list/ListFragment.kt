@@ -2,6 +2,7 @@ package com.example.tuner.fragments.list
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -27,6 +28,8 @@ class ListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
+
+        Log.d("threads", Thread.activeCount().toString())
 
         // RecyclerView
         val adapter = ListAdapter()
