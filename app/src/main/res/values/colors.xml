@@ -10,4 +10,8 @@
 
     <color name="darkGrey">#222222</color>
     <color name="grey">#808080</color>
+
+    <color name="teal">#68e7ba</color>
+    <color name="dark">#393a3f</color>
+    <color name="header">#35363b</color>
 </resources>

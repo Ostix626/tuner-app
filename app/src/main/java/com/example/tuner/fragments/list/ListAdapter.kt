@@ -1,5 +1,6 @@
 package com.example.tuner.fragments.list
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,9 @@ import com.example.tuner.MainActivity
 import com.example.tuner.R
 import com.example.tuner.model.Tunning
 import kotlinx.android.synthetic.main.tunning_row.view.*
+import java.security.AccessController.getContext
 
-class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
+class ListAdapter (private var mContext: Context): RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
     private var tunningList = emptyList<Tunning>()
 
@@ -50,9 +52,12 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
 //        holder.itemView.tunningItem.setOnClickListener {
 //            val intent = Intent(holder.itemView.context, MainActivity::class.java)
-//            intent.putExtra("tunning_name", currentItem.tunningName)
-//            intent.putExtra("tunning_tones", currentItem.tunningTones)
-//            holder.itemView.context.startActivity(intent)
+//            val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+//            pref.putString("tunning_name", currentItem.tunningName)
+//            pref.putString("tunning_tones", currentItem.tunningTones)
+//            pref.apply()
+////            intent.putExtra("tunning_name", currentItem.tunningName)
+////            intent.putExtra("tunning_tones", currentItem.tunningTones)
 //        }
 
 

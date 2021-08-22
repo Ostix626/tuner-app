@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import be.tarsos.dsp.AudioDispatcher
 import be.tarsos.dsp.AudioProcessor
 import be.tarsos.dsp.io.android.AudioDispatcherFactory
 import be.tarsos.dsp.io.android.AudioDispatcherFactory.fromDefaultMicrophone
@@ -43,6 +44,10 @@ class MainActivity : AppCompatActivity() {
     private var halfGauge : com.ekn.gruzer.gaugelibrary.HalfGauge? = null
     private var tunningNameText : TextView? = null
     private var tunningTonesText : TextView? = null
+
+    private var dispatcher: AudioDispatcher? = null
+    private var thr: Unit? = null
+    private var flag: Boolean = true
 
 
     private var tunningString : String = ""
@@ -79,18 +84,18 @@ class MainActivity : AppCompatActivity() {
         tunningTonesText = findViewById(R.id.tunningTonesTV)
 
         Log.d("threads", activeCount ().toString())
-        tunningString = intent.getStringExtra("tunning_tones").toString()
-
-//        var tunningScale : List<String>? = null
-//        var test : ArrayList<ChromaticScale>? = null
-        Log.d("LIST length", tunningString.length.toString())
-
-        if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
-        {
-            val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
-            tunningList1 = unsortedList.sorted()
-            Log.d("LISTTTTTT", tunningList1.toString())
-        }
+//        tunningString = intent.getStringExtra("tunning_tones").toString()
+//
+////        var tunningScale : List<String>? = null
+////        var test : ArrayList<ChromaticScale>? = null
+//        Log.d("LIST length", tunningString.length.toString())
+//
+//        if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
+//        {
+//            val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+//            tunningList1 = unsortedList.sorted()
+//            Log.d("LISTTTTTT", tunningList1.toString())
+//        }
 
 
 //        if(tunningString!= null && !tunningString.equals(""))
@@ -151,6 +156,49 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+//    override fun onRestart() {
+//        tunningString = intent.getStringExtra("tunning_tones").toString()
+//
+////        var tunningScale : List<String>? = null
+////        var test : ArrayList<ChromaticScale>? = null
+//        Log.d("string", tunningString)
+//        Log.d("LIST length", tunningString.length.toString())
+//
+//        if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
+//        {
+//            val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+//            tunningList1 = unsortedList.sorted()
+//            Log.d("LISTTTTTT", tunningList1.toString())
+//        }
+//        super.onRestart()
+//    }
+
+    override fun onStart() {
+        flag = true
+        Log.d("flag", flag.toString())
+        tunningString = intent.getStringExtra("tunning_tones").toString()
+
+//        var tunningScale : List<String>? = null
+//        var test : ArrayList<ChromaticScale>? = null
+        Log.d("LIST length", tunningString.length.toString())
+
+        if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
+        {
+            val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+//            tunningList1 = unsortedList.sorted()
+            val sortedList = unsortedList.sorted()
+            tunningList1 = sortedList.distinct().toList()
+            Log.d("LISTTTTTT", tunningList1.toString())
+        }
+        super.onStart()
+    }
+
+    override fun onResume() {
+        flag = true
+        Log.d("flag", flag.toString())
+        super.onResume()
+    }
+
     private fun setPermission() {
         val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)
         if (permission != PackageManager.PERMISSION_GRANTED)
@@ -195,6 +243,7 @@ class MainActivity : AppCompatActivity() {
                 else
                 {
                     Log.d("TAG> Permission", "RECORD_AUDIO has been granted --> start recording...")
+                    Log.d("flag record", flag.toString())
                     record()
 //                    startTuner()
 //                    TarsosDSP()
@@ -212,7 +261,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun record()
     {
-        val dispatcher = fromDefaultMicrophone(22050, 1024, 0)
+//        val dispatcher = fromDefaultMicrophone(22050, 1024, 0)
+        dispatcher = fromDefaultMicrophone(22050, 1024, 0)
 //        tunningString = intent.getStringExtra("tunning_tones").toString()
 //        tunningString = "E3 A4"
 
@@ -242,111 +292,114 @@ class MainActivity : AppCompatActivity() {
 
 
 //        Log.d("SCALE", test.toString())
+        Log.d("flag pre recording", flag.toString())
         val pdh = PitchDetectionHandler { result, e ->
-            val probability = result.probability
-            val pitchInHz = result.pitch
-
-            runOnUiThread (
-                Runnable()
-                {
-
-                    if(probability > 0.92)
-                    {
-                        if (tunningList != null)
+            if (flag == true) {
+                val probability = result.probability
+                val pitchInHz = result.pitch
+                Log.d("flag recording", flag.toString())
+                runOnUiThread(
+                        Runnable()
                         {
-                            val listSize = tunningList!!.size
-                            Log.d("LIST i size: ", listSize.toString())
-                            if (listSize >= 3)
-                            {
-                                for (i in 1..listSize - 1)
-                                {
-                                    Log.d("LIST i: ", i.toString())
-    //                                ChromaticScale.valueOf(tunningList[i - 1]).frequency
-                                    if (ChromaticScale.valueOf(tunningList[i - 1]).frequency <= pitchInHz && pitchInHz <= ChromaticScale.valueOf(tunningList[i]).frequency)
-                                    {
-                                        if (pitchInHz - ChromaticScale.valueOf(tunningList[i - 1]).frequency < ChromaticScale.valueOf(tunningList[i]).frequency - pitchInHz)
-                                            curent_tone = ChromaticScale.valueOf(tunningList[i - 1])
-                                        else
-                                            curent_tone = ChromaticScale.valueOf(tunningList[i])
-                                        break
-                                    }
+
+                            if (probability > 0.92) {
+                                if (tunningList != null) {
+                                    val listSize = tunningList!!.size
+                                    Log.d("LIST i size: ", listSize.toString())
+                                    if (listSize >= 3) {
+                                        for (i in 1..listSize - 1) {
+                                            Log.d("LIST i: ", i.toString())
+                                            //                                ChromaticScale.valueOf(tunningList[i - 1]).frequency
+                                            if (ChromaticScale.valueOf(tunningList[i - 1]).frequency <= pitchInHz && pitchInHz <= ChromaticScale.valueOf(tunningList[i]).frequency) {
+                                                if (pitchInHz - ChromaticScale.valueOf(tunningList[i - 1]).frequency < ChromaticScale.valueOf(tunningList[i]).frequency - pitchInHz)
+                                                    curent_tone = ChromaticScale.valueOf(tunningList[i - 1])
+                                                else
+                                                    curent_tone = ChromaticScale.valueOf(tunningList[i])
+                                                break
+                                            }
+                                        }
+                                    } else if (listSize == 2) {
+                                        Log.d("san tu", "san usa")
+                                        if (ChromaticScale.valueOf(tunningList[0]).frequency <= pitchInHz &&
+                                                pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz) {
+                                            //                                    if (pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz)
+                                            curent_tone = ChromaticScale.valueOf(tunningList[0])
+                                        } else
+                                            curent_tone = ChromaticScale.valueOf(tunningList[1])
+                                    } else if (listSize == 1) curent_tone = ChromaticScale.valueOf(tunningList[0])
                                 }
+                                Log.d("LIST curentTnoe", curent_tone.toString())
+
+                                //                    for (i in 1..SCALE_SIZE-1)
+                                //                    {
+                                //                        if (SCALE[i-1].frequency <= pitchInHz && pitchInHz <= SCALE[i].frequency )
+                                //                        {
+                                //                            if (pitchInHz - SCALE[i-1].frequency < SCALE[i].frequency - pitchInHz)
+                                //                                curent_tone = SCALE[i-1]
+                                //                            else
+                                //                                curent_tone = SCALE[i]
+                                //
+                                //                            break
+                                //                        }
+                                //                    }
+
+
+                                //                    for (f : ChromaticScale in ChromaticScale.values())
+                                //                    {
+                                //                        if (pitchInHz >)
+                                //                        Log.d("frekv", f.frequency.toString())
+                                //                    }
+                                //                    Log.d("SCALE>>>", ChromaticScale.C0.toString())
+                                val centsabs = PitchConverter.hertzToAbsoluteCent(pitchInHz.toDouble())
+                                val centsrel = PitchConverter.hertzToRelativeCent(pitchInHz.toDouble())
+                                //                    val centsrel = curent_tone?.name
+                                val ratiocent = PitchConverter.ratioToCent((pitchInHz / curent_tone?.frequency!!).toDouble())
+                                noteText?.text = curent_tone?.tone
+                                octaveText?.text = curent_tone?.octave.toString()
+                                halfGauge?.value = ratiocent
+                                freqText?.text = pitchInHz.toString() + "Hz"
+                                probText?.text = "Probability: " + probability.toString()
+                                val abs: TextView = findViewById(R.id.centsabs)
+                                abs?.text = "abs> " + centsabs.toString()
+                                val rel: TextView = findViewById(R.id.centsabs2)
+                                rel?.text = "rel> " + centsrel.toString()
+                                val ratio: TextView = findViewById(R.id.centsabs3)
+                                ratio?.text = "ratio> " + ratiocent.toString()
+
+                                //shared preferences
+                                val name: String? = intent.getStringExtra("tunning_name")
+                                val tones: String? = intent.getStringExtra("tunning_tones")
+                                tunningNameText?.text = name
+                                tunningTonesText?.text = tones
+                            } else if (pitchInHz < 0) {
+                                freqText?.text = "0 Hz"
+                                probText?.text = "Probability: 0"
                             }
-                            else if (listSize == 2)
-                            {
-                                Log.d("san tu","san usa")
-                                if (ChromaticScale.valueOf(tunningList[0]).frequency <= pitchInHz &&
-                                        pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz) {
-//                                    if (pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz)
-                                        curent_tone = ChromaticScale.valueOf(tunningList[0])
-                                }
-                                else
-                                    curent_tone = ChromaticScale.valueOf(tunningList[1])
-                            }
-                            else if (listSize == 1) curent_tone = ChromaticScale.valueOf(tunningList[0])
                         }
-                            Log.d("LIST curentTnoe", curent_tone.toString())
-
-    //                    for (i in 1..SCALE_SIZE-1)
-    //                    {
-    //                        if (SCALE[i-1].frequency <= pitchInHz && pitchInHz <= SCALE[i].frequency )
-    //                        {
-    //                            if (pitchInHz - SCALE[i-1].frequency < SCALE[i].frequency - pitchInHz)
-    //                                curent_tone = SCALE[i-1]
-    //                            else
-    //                                curent_tone = SCALE[i]
-    //
-    //                            break
-    //                        }
-    //                    }
-
-
-
-    //                    for (f : ChromaticScale in ChromaticScale.values())
-    //                    {
-    //                        if (pitchInHz >)
-    //                        Log.d("frekv", f.frequency.toString())
-    //                    }
-    //                    Log.d("SCALE>>>", ChromaticScale.C0.toString())
-                        val centsabs = PitchConverter.hertzToAbsoluteCent(pitchInHz.toDouble())
-                        val centsrel = PitchConverter.hertzToRelativeCent(pitchInHz.toDouble())
-    //                    val centsrel = curent_tone?.name
-                        val ratiocent = PitchConverter.ratioToCent((pitchInHz / curent_tone?.frequency!!).toDouble())
-                        noteText?.text = curent_tone?.tone
-                        octaveText?.text = curent_tone?.octave.toString()
-                        halfGauge?.value = ratiocent
-                        freqText?.text = pitchInHz.toString() + "Hz"
-                        probText?.text = "Probability: " + probability.toString()
-                        val abs : TextView = findViewById(R.id.centsabs)
-                        abs?.text = "abs> " + centsabs.toString()
-                        val rel : TextView = findViewById(R.id.centsabs2)
-                        rel?.text = "rel> " + centsrel.toString()
-                        val ratio : TextView = findViewById(R.id.centsabs3)
-                        ratio?.text = "ratio> " + ratiocent.toString()
-
-                        //shared preferences
-                        val name: String? = intent.getStringExtra("tunning_name")
-                        val tones: String? = intent.getStringExtra("tunning_tones")
-                        tunningNameText?.text = name
-                        tunningTonesText?.text = tones
-                    }
-                    else if ( pitchInHz < 0)
-                    {
-                        freqText?.text = "0 Hz"
-                        probText?.text = "Probability: 0"
-                    }
-                }
-            )
+                )
+            }
             //run on ui thread finish
         }
         val p: AudioProcessor = PitchProcessor(PitchEstimationAlgorithm.FFT_YIN, 22050F, 1024, pdh)
-        dispatcher.addAudioProcessor(p)
+        dispatcher?.addAudioProcessor(p)
         Thread(dispatcher, "Audio Dispatcher").start()
     }
 
+    override fun onPause() {
+
+        flag = false
+        Log.d("flag", flag.toString())
+//        if(dispatcher != null)
+//            Thread(dispatcher, "Audio Dispatcher").join(10)
+//        if (thr != null)
+//        {
+//            thr.interrupt();
+//        }
+        super.onPause()
+    }
 
 
-//    private fun startTuner()
+    //    private fun startTuner()
 //    {
 //        val dispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0)
 //        val pdh = PitchDetectionHandler { result, _ ->

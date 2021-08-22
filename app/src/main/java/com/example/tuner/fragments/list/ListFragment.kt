@@ -32,7 +32,7 @@ class ListFragment : Fragment() {
         Log.d("threads", Thread.activeCount().toString())
 
         // RecyclerView
-        val adapter = ListAdapter()
+        val adapter = context?.let{ ListAdapter(it) }
         val recyclerView = view.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -40,7 +40,7 @@ class ListFragment : Fragment() {
         // TunningViewModel
         mTunningViewModel = ViewModelProvider(this).get(TunningViewModel::class.java)
         mTunningViewModel.readAllData.observe(viewLifecycleOwner, Observer { tunning ->
-            adapter.setData(tunning)
+            adapter?.setData(tunning)
         })
 
         view.floatingActionButton.setOnClickListener {
