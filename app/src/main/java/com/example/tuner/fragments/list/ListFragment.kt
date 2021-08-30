@@ -1,6 +1,7 @@
 package com.example.tuner.fragments.list
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -10,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tuner.MainActivity
 import com.example.tuner.R
 import com.example.tuner.viewmodel.TunningViewModel
 import kotlinx.android.synthetic.main.fragment_list.view.*
@@ -45,6 +47,13 @@ class ListFragment : Fragment() {
 
         view.floatingActionButton.setOnClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addFragment)
+        }
+        view.normalTunning.setOnClickListener{
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra("tunning_name", "")
+            intent.putExtra("tunning_tones", "")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
 
         setHasOptionsMenu(true)

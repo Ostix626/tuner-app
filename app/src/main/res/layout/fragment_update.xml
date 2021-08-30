@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.update.UpdateFragment"
-    android:padding="26dp">
+    android:padding="26dp"
+    tools:context=".fragments.update.UpdateFragment">
 
     <EditText
         android:id="@+id/updateTunningNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="26dp"
+        android:backgroundTint="@color/teal"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
         android:hint="Tunning name"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,21 +27,111 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/border"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
         android:hint="Tones"
+        android:inputType="textPersonName"
+        android:padding="15dp"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateTunningNameEditText" />
 
-    <Button
-        android:id="@+id/updateTunningButton"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:layout_marginTop="74dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.313"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateTunningTonesEditText">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:theme="@style/changeBackgroundColor"
+            app:boxBackgroundColor="@color/darkGrey"
+            app:boxStrokeColor="@color/teal"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterOverflowTextColor="@color/teal"
+            app:startIconDrawable="@drawable/music_note">
+
+            <AutoCompleteTextView
+                android:id="@+id/noteAutoCompleteTextViewUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutOctave"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="3"
+            android:theme="@style/changeBackgroundColor"
+            app:boxBackgroundColor="@color/darkGrey"
+            app:boxStrokeColor="@color/teal"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterOverflowTextColor="@color/teal"
+            app:startIconDrawable="@drawable/numbers">
+
+            <AutoCompleteTextView
+                android:id="@+id/octaveAutoCompleteTextViewUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="0" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/updateTunningButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <ImageView
+            android:id="@+id/deleteUpdate"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/minus" />
+
+        <ImageView
+            android:id="@+id/addUpdate"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:src="@drawable/plus" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/updateTunningButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="Update"
+        android:textColor="@color/teal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateTunningTonesEditText" />
+        app:strokeColor="@color/teal" />
 </androidx.constraintlayout.widget.ConstraintLayout>

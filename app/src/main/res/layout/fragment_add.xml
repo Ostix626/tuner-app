@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.add.AddFragment"
-    android:padding="26dp">
+    android:padding="26dp"
+    tools:context=".fragments.add.AddFragment">
 
 
     <EditText
         android:id="@+id/tunningNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="26dp"
+        android:backgroundTint="@color/teal"
         android:ems="10"
+        android:hint="Tunning name"
         android:inputType="textPersonName"
-        android:text="Tunning name"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,20 +27,215 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:background="@drawable/border"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Tones"
+        android:hint="Tones"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tunningNameEditText" />
 
-    <Button
-        android:id="@+id/addNewTunningButton"
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tunningTonesEditText">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:theme="@style/changeBackgroundColor"
+            app:boxBackgroundColor="@color/darkGrey"
+            app:boxStrokeColor="@color/teal"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterOverflowTextColor="@color/teal"
+            app:startIconDrawable="@drawable/music_note">
+
+            <AutoCompleteTextView
+                android:id="@+id/noteAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="C" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutOctave"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="3"
+            android:theme="@style/changeBackgroundColor"
+            app:boxBackgroundColor="@color/darkGrey"
+            app:boxStrokeColor="@color/teal"
+            app:boxStrokeWidthFocused="1dp"
+            app:counterOverflowTextColor="@color/teal"
+            app:startIconDrawable="@drawable/numbers">
+
+            <AutoCompleteTextView
+                android:id="@+id/octaveAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="0" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="Add"
+        app:layout_constraintBottom_toTopOf="@+id/addNewTunningButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tunningTonesEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/minus" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="0dp"
+            android:src="@drawable/plus" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/addNewTunningButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:textColor="@color/teal"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.392"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/teal" />
+
+    <!--    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/textInputLayout"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--        android:layout_width="184dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:outlineAmbientShadowColor="@color/teal"-->
+<!--        android:outlineSpotShadowColor="@color/teal"-->
+<!--        android:textColorHint="@color/teal"-->
+
+<!--        android:theme="@style/changeBackgroundColor"-->
+<!--        app:boxBackgroundColor="@color/darkGrey"-->
+<!--        app:boxStrokeColor="@color/teal"-->
+<!--        app:boxStrokeWidthFocused="1dp"-->
+<!--        app:counterOverflowTextColor="@color/teal"-->
+
+<!--        app:counterTextColor="@color/teal"-->
+<!--        app:helperTextTextColor="@color/teal"-->
+<!--        app:hintTextColor="@color/teal"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tunningTonesEditText"-->
+<!--        app:layout_constraintVertical_bias="0.060000002"-->
+<!--        app:placeholderTextColor="@color/teal"-->
+<!--        app:startIconDrawable="@drawable/music_note">-->
+<!--        -->
+<!--        -->
+<!--        -->
+
+<!--        <AutoCompleteTextView-->
+<!--            android:id="@+id/noteAutoCompleteTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:inputType="none"-->
+<!--            android:text="C" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:id="@+id/textInputLayoutOctave"-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--        android:layout_width="122dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="3dp"-->
+<!--        android:layout_marginEnd="119dp"-->
+
+<!--        android:layout_marginBottom="110dp"-->
+<!--        android:outlineAmbientShadowColor="@color/teal"-->
+<!--        android:outlineSpotShadowColor="@color/teal"-->
+<!--        android:textColorHint="@color/teal"-->
+<!--        android:theme="@style/changeBackgroundColor"-->
+
+<!--        app:boxBackgroundColor="@color/darkGrey"-->
+<!--        app:boxStrokeColor="@color/teal"-->
+<!--        app:boxStrokeWidthFocused="1dp"-->
+<!--        app:counterOverflowTextColor="@color/teal"-->
+<!--        app:counterTextColor="@color/teal"-->
+<!--        app:helperTextTextColor="@color/teal"-->
+<!--        app:hintTextColor="@color/teal"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/button"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textInputLayout"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+<!--        app:placeholderTextColor="@color/teal"-->
+<!--        app:startIconDrawable="@drawable/numbers">-->
+
+<!--        <AutoCompleteTextView-->
+<!--            android:id="@+id/octaveAutoCompleteTextView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1"-->
+<!--            android:inputType="none"-->
+<!--            android:text="0" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="298dp"-->
+<!--        android:layout_marginBottom="70dp"-->
+<!--        android:text="add"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/addNewTunningButton"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/del"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="80dp"-->
+<!--        android:text="del"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/addNewTunningButton"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/button"-->
+<!--        app:layout_constraintHorizontal_bias="0.233"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

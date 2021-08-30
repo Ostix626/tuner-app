@@ -12,9 +12,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/editTunningButton"
+        android:layout_toRightOf="@id/editTunningButton"
         android:orientation="vertical"
-        android:paddingLeft="30dp"
+        android:paddingLeft="5dp"
         android:paddingBottom="3dp"
         >
 
@@ -42,12 +42,12 @@
 
     <ImageView
         android:id="@+id/editTunningButton"
-        android:layout_width="75dp"
+        android:layout_width="65dp"
         android:layout_height="55dp"
         android:src="@drawable/edit_icon"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:paddingHorizontal="20dp"
+        android:layout_alignParentStart="true"
+        android:paddingHorizontal="15dp"
         android:paddingVertical="12dp"
         app:tint="@color/teal" />
 
