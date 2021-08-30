@@ -175,7 +175,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         flag = true
-        Log.d("flag", flag.toString())
+        Log.d("flag start", flag.toString())
         tunningString = intent.getStringExtra("tunning_tones").toString()
 
 //        var tunningScale : List<String>? = null
@@ -186,8 +186,17 @@ class MainActivity : AppCompatActivity() {
         {
             val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
 //            tunningList1 = unsortedList.sorted()
-            val sortedList = unsortedList.sorted()
-            tunningList1 = sortedList.distinct().toList()
+
+//            val unsortedList = tunningString.split(" ").toMutableList()
+//            for (i in 0..unsortedList.size - 1)
+//            {
+//                unsortedList[i] = unsortedList[i].takeLast(1) + unsortedList[i]
+//            }
+//            val sortedList = unsortedList.sorted()
+//            Log.d("sortedlist", sortedList.toString())
+
+//            tunningList1 = sortedList.distinct().toList()
+            tunningList1 = unsortedList.distinct().toList()
             Log.d("LISTTTTTT", tunningList1.toString())
         }
         super.onStart()
@@ -195,7 +204,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         flag = true
-        Log.d("flag", flag.toString())
+        Log.d("flag resume", flag.toString())
         super.onResume()
     }
 
@@ -310,7 +319,13 @@ class MainActivity : AppCompatActivity() {
                                         for (i in 1..listSize - 1) {
                                             Log.d("LIST i: ", i.toString())
                                             //                                ChromaticScale.valueOf(tunningList[i - 1]).frequency
-                                            if (ChromaticScale.valueOf(tunningList[i - 1]).frequency <= pitchInHz && pitchInHz <= ChromaticScale.valueOf(tunningList[i]).frequency) {
+                                            if (ChromaticScale.valueOf(tunningList[i - 1]).frequency <= pitchInHz && pitchInHz <= ChromaticScale.valueOf(tunningList[i]).frequency)
+                                            {
+//                                                if (compareTones(ChromaticScale.valueOf(tunningList[i - 1]).frequency, ChromaticScale.valueOf(tunningList[i]).frequency, pitchInHz))
+//                                                    curent_tone = ChromaticScale.valueOf(tunningList[i])
+//                                                else
+//                                                    curent_tone = ChromaticScale.valueOf(tunningList[i - 1])
+//                                                break
                                                 if (pitchInHz - ChromaticScale.valueOf(tunningList[i - 1]).frequency < ChromaticScale.valueOf(tunningList[i]).frequency - pitchInHz)
                                                     curent_tone = ChromaticScale.valueOf(tunningList[i - 1])
                                                 else
@@ -318,22 +333,28 @@ class MainActivity : AppCompatActivity() {
                                                 break
                                             }
                                         }
+                                        if (pitchInHz <= ChromaticScale.valueOf(tunningList[0]).frequency)
+                                            curent_tone = ChromaticScale.valueOf(tunningList[0])
+                                        else if (pitchInHz >= ChromaticScale.valueOf(tunningList[listSize - 1]).frequency)
+                                            curent_tone = ChromaticScale.valueOf(tunningList[listSize - 1])
+
                                     } else if (listSize == 2) {
-                                        Log.d("san tu", "san usa")
                                         if (ChromaticScale.valueOf(tunningList[0]).frequency <= pitchInHz &&
                                                 pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz) {
                                             //                                    if (pitchInHz - ChromaticScale.valueOf(tunningList[0]).frequency < ChromaticScale.valueOf(tunningList[1]).frequency - pitchInHz)
                                             curent_tone = ChromaticScale.valueOf(tunningList[0])
                                         } else
                                             curent_tone = ChromaticScale.valueOf(tunningList[1])
+                                        if (pitchInHz <= ChromaticScale.valueOf(tunningList[0]).frequency) curent_tone = ChromaticScale.valueOf(tunningList[0])
+                                        else if (pitchInHz >= ChromaticScale.valueOf(tunningList[1]).frequency) curent_tone = ChromaticScale.valueOf(tunningList[listSize - 1])
                                     } else if (listSize == 1) curent_tone = ChromaticScale.valueOf(tunningList[0])
                                 }
-                                Log.d("LIST curentTnoe", curent_tone.toString())
+                                Log.d("LIST curentTone", curent_tone.toString())
 
                                 //                    for (i in 1..SCALE_SIZE-1)
                                 //                    {
                                 //                        if (SCALE[i-1].frequency <= pitchInHz && pitchInHz <= SCALE[i].frequency )
-                                //                        {
+                                //                        {`
                                 //                            if (pitchInHz - SCALE[i-1].frequency < SCALE[i].frequency - pitchInHz)
                                 //                                curent_tone = SCALE[i-1]
                                 //                            else
@@ -388,7 +409,7 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
 
         flag = false
-        Log.d("flag", flag.toString())
+        Log.d("flag pause", flag.toString())
 //        if(dispatcher != null)
 //            Thread(dispatcher, "Audio Dispatcher").join(10)
 //        if (thr != null)
@@ -518,6 +539,14 @@ class MainActivity : AppCompatActivity() {
     {
         Log.e("freq>>>", frequency.diffFrequency.toString())
         freqText?.text = (frequency.expectedFrequency + frequency.diffFrequency).toString() + " Hz"
+    }
+
+    private fun compareTones(t1: Float, t2: Float, hz: Float) : Boolean
+    {
+        val mid = (t1 + t2) * 0.5
+        if (hz >= mid)
+            return true
+        return false
     }
 
     //    private fun hasPermission() : Boolean {
