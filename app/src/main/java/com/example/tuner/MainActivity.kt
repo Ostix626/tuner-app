@@ -33,11 +33,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.activeCount
 import java.util.*
 import java.util.Collections.frequency
+import kotlin.math.round
+import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 
 class MainActivity : AppCompatActivity() {
     private val REQUEST_RECORD_CODE = 0
     private var freqText : TextView? = null
+    private var centsText : TextView? = null
     private var probText : TextView? = null
     private var noteText : TextView? = null
     private var octaveText : TextView? = null
@@ -76,12 +80,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setPermission()
         freqText = findViewById(R.id.frequency)
-        probText = findViewById(R.id.probability)
+//        probText = findViewById(R.id.probability)
+        centsText = findViewById(R.id.cents)
         halfGauge = findViewById(R.id.halfGauge)
         noteText = findViewById(R.id.noteTextView)
         octaveText = findViewById(R.id.octaveTextView)
         tunningNameText = findViewById(R.id.tunningNameTV)
         tunningTonesText = findViewById(R.id.tunningTonesTV)
+
+        setUpHalfGuage()
+
+//        setTitle(intent.getStringExtra("tunning_name"));
+        tunningNameText?.text = intent.getStringExtra("tunning_name")
+        tunningTonesText?.text = intent.getStringExtra("tunning_tones")
 
         Log.d("threads", activeCount ().toString())
 //        tunningString = intent.getStringExtra("tunning_tones").toString()
@@ -111,50 +122,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this@MainActivity, NavActivity::class.java))
         }
 
-        val range_red_L = Range()
-        range_red_L.color = Color.parseColor("#ce0000")
-        range_red_L.from = -50.0
-        range_red_L.to = -25.0
-
-        val range_red_R = Range()
-        range_red_R.color = Color.parseColor("#ce0000")
-        range_red_R.from = 25.0
-        range_red_R.to = 50.0
-
-        val range_blue_L = Range()
-        range_blue_L.color = Color.parseColor("#E3E500")
-        range_blue_L.from = -25.0
-        range_blue_L.to = -5.0
-
-        val range_blue_R = Range()
-        range_blue_R.color = Color.parseColor("#E3E500")
-        range_blue_R.from = 5.0
-        range_blue_R.to = 25.0
-
-        val range_green_L = Range()
-        range_green_L.color = Color.parseColor("#00b20b")
-        range_green_L.from = -5.0
-        range_green_L.to = 0.0
-
-        val range_green_R = Range()
-        range_green_R.color = Color.parseColor("#00b20b")
-        range_green_R.from = 0.0
-        range_green_R.to = 5.0
-
-        //add color ranges to gauge
-        halfGauge?.addRange(range_red_L)
-        halfGauge?.addRange(range_red_R)
-        halfGauge?.addRange(range_blue_L)
-        halfGauge?.addRange(range_blue_R)
-        halfGauge?.addRange(range_green_L)
-        halfGauge?.addRange(range_green_R)
-
-        //set min max and current value
-        halfGauge?.minValue = -50.0
-        halfGauge?.maxValue = 50.0
-        halfGauge?.value = 0.0
 
     }
+
 
 //    override fun onRestart() {
 //        tunningString = intent.getStringExtra("tunning_tones").toString()
@@ -378,22 +348,18 @@ class MainActivity : AppCompatActivity() {
                                 noteText?.text = curent_tone?.tone
                                 octaveText?.text = curent_tone?.octave.toString()
                                 halfGauge?.value = ratiocent
-                                freqText?.text = pitchInHz.toString() + "Hz"
-                                probText?.text = "Probability: " + probability.toString()
-                                val abs: TextView = findViewById(R.id.centsabs)
-                                abs?.text = "abs> " + centsabs.toString()
-                                val rel: TextView = findViewById(R.id.centsabs2)
-                                rel?.text = "rel> " + centsrel.toString()
-                                val ratio: TextView = findViewById(R.id.centsabs3)
-                                ratio?.text = "ratio> " + ratiocent.toString()
+                                freqText?.text = pitchInHz.roundToInt().toString() + " Hz"
+                                centsText?.text = ratiocent.roundToInt().toString()
+//                                probText?.text = "Probability: " + probability.toString()
 
                                 //shared preferences
                                 val name: String? = intent.getStringExtra("tunning_name")
                                 val tones: String? = intent.getStringExtra("tunning_tones")
                                 tunningNameText?.text = name
                                 tunningTonesText?.text = tones
+                                changeCurrentTone(ratiocent)
                             } else if (pitchInHz < 0) {
-                                freqText?.text = "0 Hz"
+//                                freqText?.text = "0 Hz"
                                 probText?.text = "Probability: 0"
                             }
                         }
@@ -548,6 +514,78 @@ class MainActivity : AppCompatActivity() {
             return true
         return false
     }
+
+    private fun setUpHalfGuage() {
+        val range_red_L = Range()
+        range_red_L.color = Color.parseColor("#ED4856")
+        range_red_L.from = -50.0
+        range_red_L.to = -25.0
+
+        val range_red_R = Range()
+        range_red_R.color = Color.parseColor("#ED4856")
+        range_red_R.from = 25.0
+        range_red_R.to = 50.0
+
+        val range_blue_L = Range()
+        range_blue_L.color = Color.parseColor("#FFEA7F")
+        range_blue_L.from = -25.0
+        range_blue_L.to = -5.0
+
+        val range_blue_R = Range()
+        range_blue_R.color = Color.parseColor("#FFEA7F")
+        range_blue_R.from = 5.0
+        range_blue_R.to = 25.0
+
+        val range_green_L = Range()
+        range_green_L.color = Color.parseColor("#68e7ba")
+        range_green_L.from = -5.0
+        range_green_L.to = 0.0
+
+        val range_green_R = Range()
+        range_green_R.color = Color.parseColor("#68e7ba")
+        range_green_R.from = 0.0
+        range_green_R.to = 5.0
+
+        //add color ranges to gauge
+        halfGauge?.addRange(range_red_L)
+        halfGauge?.addRange(range_red_R)
+        halfGauge?.addRange(range_blue_L)
+        halfGauge?.addRange(range_blue_R)
+        halfGauge?.addRange(range_green_L)
+        halfGauge?.addRange(range_green_R)
+
+        //set min max and current value
+        halfGauge?.minValue = -50.0
+        halfGauge?.maxValue = 50.0
+        halfGauge?.value = 0.0
+
+//        halfGauge?.setNeedleColor(Color.parseColor("#68e7ba"))
+        halfGauge?.setNeedleColor(Color.parseColor("#35363b"))
+//        halfGauge?.valueColor = Color.WHITE
+//        halfGauge?.minValueTextColor = Color.RED
+//        halfGauge?.maxValueTextColor = Color.GREEN
+    }
+
+    private fun changeCurrentTone (cents : Double)
+    {
+        if ( -6 <= cents && cents <= 6)
+        {
+            noteText?.setTextColor(Color.parseColor("#68e7ba"))
+            octaveText?.setTextColor(Color.parseColor("#68e7ba"))
+        }
+        else if ( -25 <= cents && cents <= 25 )
+        {
+            noteText?.setTextColor(Color.parseColor("#FFEA7F"))
+            octaveText?.setTextColor(Color.parseColor("#FFEA7F"))
+        }
+        else
+        {
+            noteText?.setTextColor(Color.parseColor("#ED4856"))
+            octaveText?.setTextColor(Color.parseColor("#ED4856"))
+        }
+
+    }
+
 
     //    private fun hasPermission() : Boolean {
 //        return ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
