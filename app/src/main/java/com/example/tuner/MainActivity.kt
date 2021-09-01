@@ -33,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Thread.activeCount
 import java.util.*
 import java.util.Collections.frequency
+import kotlin.collections.ArrayList
 import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -143,6 +144,26 @@ class MainActivity : AppCompatActivity() {
 //        super.onRestart()
 //    }
 
+    private fun sortTones(toneList: ArrayList<String>): List<String>
+    {
+        val size = toneList.size
+        var min_index = 0
+
+        for (i in 0..size - 1) {
+            min_index = i
+            for (j in (i + 1)..size - 1) {
+                if(ChromaticScale.valueOf(toneList[j]).frequency < ChromaticScale.valueOf(toneList[min_index]).frequency) {
+                    min_index = j
+                }
+            }
+            val tmp = toneList[i]
+            toneList[i] = toneList[min_index]
+            toneList[min_index] = tmp
+        }
+        return toneList.toList()
+    }
+
+
     override fun onStart() {
         flag = true
         Log.d("flag start", flag.toString())
@@ -155,8 +176,10 @@ class MainActivity : AppCompatActivity() {
         if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
         {
             val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
+            tunningList1 =  sortTones(unsortedList.distinct().toList() as ArrayList<String>)
 //            tunningList1 = unsortedList.sorted()
-
+                val sorted = sortTones(unsortedList.distinct().toList() as ArrayList<String>)
+            Log.d("sorted", sorted.toString())
 //            val unsortedList = tunningString.split(" ").toMutableList()
 //            for (i in 0..unsortedList.size - 1)
 //            {
@@ -166,7 +189,8 @@ class MainActivity : AppCompatActivity() {
 //            Log.d("sortedlist", sortedList.toString())
 
 //            tunningList1 = sortedList.distinct().toList()
-            tunningList1 = unsortedList.distinct().toList()
+//            tunningList1 = unsortedList.distinct().toList()
+
             Log.d("LISTTTTTT", tunningList1.toString())
         }
         super.onStart()
