@@ -95,6 +95,9 @@ class MainActivity : AppCompatActivity() {
         tunningNameText?.text = intent.getStringExtra("tunning_name")
         tunningTonesText?.text = intent.getStringExtra("tunning_tones")
 
+        if (tunningNameText?.text == "") tunningNameText?.visibility = View.GONE
+        if (tunningTonesText?.text == "") tunningTonesText?.visibility = View.GONE
+
         Log.d("threads", activeCount ().toString())
 //        tunningString = intent.getStringExtra("tunning_tones").toString()
 //
@@ -590,9 +593,10 @@ class MainActivity : AppCompatActivity() {
 
 //        halfGauge?.setNeedleColor(Color.parseColor("#68e7ba"))
         halfGauge?.setNeedleColor(Color.parseColor("#35363b"))
+//        halfGauge?.setNeedleColor(Color.parseColor("#808080"))
 //        halfGauge?.valueColor = Color.WHITE
-//        halfGauge?.minValueTextColor = Color.RED
-//        halfGauge?.maxValueTextColor = Color.GREEN
+//        halfGauge?.minValueTextColor = Color.parseColor("#68e7ba")
+//        halfGauge?.maxValueTextColor = Color.parseColor("#68e7ba")
     }
 
     private fun changeCurrentTone (cents : Double)
