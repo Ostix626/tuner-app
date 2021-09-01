@@ -176,10 +176,14 @@ class MainActivity : AppCompatActivity() {
         if (tunningString.length > 1 && !tunningString.equals("null") && tunningString!= null)
         {
             val unsortedList = tunningString.split(" ") // "E2 A2 D3 G3 B3 E4"
-            tunningList1 =  sortTones(unsortedList.distinct().toList() as ArrayList<String>)
+            Log.d("sss", unsortedList.distinct().size.toString())
+            if (unsortedList.distinct().size > 1)
+                tunningList1 =  sortTones(unsortedList.distinct().toList() as ArrayList<String>)
+            else
+                tunningList1 = unsortedList.distinct().toList()
+
 //            tunningList1 = unsortedList.sorted()
-                val sorted = sortTones(unsortedList.distinct().toList() as ArrayList<String>)
-            Log.d("sorted", sorted.toString())
+
 //            val unsortedList = tunningString.split(" ").toMutableList()
 //            for (i in 0..unsortedList.size - 1)
 //            {

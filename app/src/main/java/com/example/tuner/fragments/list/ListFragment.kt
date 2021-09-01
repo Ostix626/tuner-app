@@ -42,6 +42,17 @@ class ListFragment : Fragment() {
         // TunningViewModel
         mTunningViewModel = ViewModelProvider(this).get(TunningViewModel::class.java)
         mTunningViewModel.readAllData.observe(viewLifecycleOwner, Observer { tunning ->
+            view.addNewTunningIV.visibility = View.INVISIBLE
+            view.allTonesTunningIV.visibility = View.INVISIBLE
+
+            if(tunning.isEmpty()) {
+                view.addNewTunningIV.visibility = View.VISIBLE
+                view.allTonesTunningIV.visibility = View.VISIBLE
+            }
+//            else {
+//                view.addNewTunningIV.visibility = View.INVISIBLE
+//                view.allTonesTunningIV.visibility = View.INVISIBLE
+//            }
             adapter?.setData(tunning)
         })
 

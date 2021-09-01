@@ -12,9 +12,10 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/normalTunning"
@@ -42,6 +43,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageView
+        android:id="@+id/addNewTunningIV"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/add_new_tunning"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton" />
+
+    <ImageView
+        android:id="@+id/allTonesTunningIV"
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/all_tones_tunning"
+        app:layout_constraintBottom_toBottomOf="@+id/normalTunning"
+        app:layout_constraintEnd_toStartOf="@+id/normalTunning"
+        app:layout_constraintTop_toTopOf="@+id/normalTunning" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
