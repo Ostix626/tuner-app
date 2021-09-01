@@ -372,8 +372,9 @@ class MainActivity : AppCompatActivity() {
                                 noteText?.text = curent_tone?.tone
                                 octaveText?.text = curent_tone?.octave.toString()
                                 halfGauge?.value = ratiocent
+                                centsText?.text = ratiocent.roundToInt().toString() + " cents"
                                 freqText?.text = pitchInHz.roundToInt().toString() + " Hz"
-                                centsText?.text = ratiocent.roundToInt().toString()
+
 //                                probText?.text = "Probability: " + probability.toString()
 
                                 //shared preferences

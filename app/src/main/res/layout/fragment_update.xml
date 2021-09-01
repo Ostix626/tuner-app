@@ -44,7 +44,7 @@
         android:layout_marginVertical="16dp"
         android:layout_marginTop="74dp"
         android:orientation="horizontal"
-        android:weightSum="5"
+        android:weightSum="7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.313"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:theme="@style/changeBackgroundColor"
             app:boxBackgroundColor="@color/darkGrey"
             app:boxStrokeColor="@color/teal"
@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:theme="@style/changeBackgroundColor"
             app:boxBackgroundColor="@color/darkGrey"
             app:boxStrokeColor="@color/teal"
@@ -108,16 +108,17 @@
 
         <ImageView
             android:id="@+id/deleteUpdate"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/minus" />
 
         <ImageView
             android:id="@+id/addUpdate"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/plus" />
 
     </RelativeLayout>
@@ -128,6 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Update"
+        android:padding="16dp"
         android:textColor="@color/teal"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
