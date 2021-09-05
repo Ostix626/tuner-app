@@ -42,7 +42,7 @@ class UpdateFragment : Fragment() {
     @InternalCoroutinesApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
+
         val view = inflater.inflate(R.layout.fragment_update, container, false)
         view.updateTunningTonesEditText.setFocusable(false)
 
@@ -51,24 +51,22 @@ class UpdateFragment : Fragment() {
 
         val tmp = args.currentTunning.tunningTones.split(" ") as MutableList<String> // "E2 A2 D3 G3 B3 E4"
         if (tmp.size == 1)
-            tunningTonesArray.add(tmp[0])  // za bug kada je samo jedan ton
+            tunningTonesArray.add(tmp[0])
         else
             tunningTonesArray = tmp
 
 
         view.updateTunningNameEditText.setText(args.currentTunning.tunningName)
         view.updateTunningTonesEditText.setText(args.currentTunning.tunningTones)
-        Toast.makeText(requireContext(), tunningTonesArray.toString(), Toast.LENGTH_LONG).show()
 
 
         view.updateTunningButton.setOnClickListener {
             updateItem()
         }
-        // add menu
+
         setHasOptionsMenu(true)
 
         view.addUpdate.setOnClickListener{
-//            var tmpTone = view.noteAutoCompleteTextView.text.toString().plus(view.octaveAutoCompleteTextView.text)
             var tmpTone : String = view.noteAutoCompleteTextViewUpdate.text.toString()
             val tmpOctave : String = view.octaveAutoCompleteTextViewUpdate.text.toString()
             when (tmpTone) {
@@ -78,6 +76,7 @@ class UpdateFragment : Fragment() {
                 "G#/Ab" -> tmpTone = "Ab"
                 "A#/Bb" -> tmpTone = "Bb"
             }
+
             tunningTonesArray.add(tmpTone.plus(tmpOctave))
             updateTunningTonesEditText.setText(tunningTonesArray.joinToString(" "))
         }
@@ -101,12 +100,9 @@ class UpdateFragment : Fragment() {
 
         if (inputCheck(tunningName, tunningTones))
         {
-            // create tunning object
             val updatedTunning = Tunning(args.currentTunning.id, tunningName, tunningTones)
-            // update current tunning
             mTunningViewModel.updateTunning(updatedTunning)
             Toast.makeText(requireContext(), "Tunning updated", Toast.LENGTH_SHORT).show()
-            // navigate back
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
         else

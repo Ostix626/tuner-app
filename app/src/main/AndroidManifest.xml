@@ -8,9 +8,10 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Simple tuner"
+        android:label="Simple Tuner"
         android:debuggable="true"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tuner"
         tools:ignore="HardcodedDebugMode">

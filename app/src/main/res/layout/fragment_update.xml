@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="26dp"
         android:backgroundTint="@color/teal"
+        android:imeOptions="actionDone"
         android:ems="10"
         android:hint="Tunning name"
         android:inputType="textPersonName"
@@ -108,18 +109,46 @@
 
         <ImageView
             android:id="@+id/deleteUpdate"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="20dp"
             android:src="@drawable/minus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deleteUpdate"
+            android:layout_alignStart="@+id/deleteUpdate"
+            android:layout_alignEnd="@+id/deleteUpdate"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="0dp"
+            android:text="Delete\nTone"
+            android:textColor="@color/dark" />
 
         <ImageView
             android:id="@+id/addUpdate"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/plus" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addUpdate"
+            android:layout_alignStart="@+id/addUpdate"
+            android:layout_alignEnd="@+id/addUpdate"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="0dp"
+            android:text="Add\nTone"
+            android:textColor="@color/dark" />
 
     </RelativeLayout>
 
@@ -128,7 +157,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update"
+        android:text="Update Tunning"
         android:padding="16dp"
         android:textColor="@color/teal"
         android:textStyle="bold"

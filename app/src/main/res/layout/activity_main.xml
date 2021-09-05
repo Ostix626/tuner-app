@@ -132,6 +132,7 @@
             android:id="@+id/frequency"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:paddingRight="33dp"
             android:text="0 Hz"
             android:textColor="@color/grey"
             android:textAlignment="textEnd"

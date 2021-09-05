@@ -37,4 +37,10 @@
         <style name="changeBackgroundColor"  parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
                 <item name="colorSurface">@color/black</item>
         </style>
+
+<!--    <style name="DialogTheme" parent="ThemeOverlay.AppCompat.Dialog">-->
+<!--        <item name="android:textColorPrimary">@color/teal</item>-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="colorAccent">@color/teal</item>-->
+<!--    </style>-->
 </resources>
