@@ -28,18 +28,15 @@ class ListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_list, container, false)
 
         Log.d("threads", Thread.activeCount().toString())
 
-        // RecyclerView
         val adapter = context?.let{ ListAdapter(it) }
         val recyclerView = view.recyclerview
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        // TunningViewModel
         mTunningViewModel = ViewModelProvider(this).get(TunningViewModel::class.java)
         mTunningViewModel.readAllData.observe(viewLifecycleOwner, Observer { tunning ->
             view.addNewTunningIV.visibility = View.INVISIBLE
@@ -49,10 +46,7 @@ class ListFragment : Fragment() {
                 view.addNewTunningIV.visibility = View.VISIBLE
                 view.allTonesTunningIV.visibility = View.VISIBLE
             }
-//            else {
-//                view.addNewTunningIV.visibility = View.INVISIBLE
-//                view.allTonesTunningIV.visibility = View.INVISIBLE
-//            }
+
             adapter?.setData(tunning)
         })
 

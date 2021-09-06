@@ -90,12 +90,9 @@ class AddFragment : Fragment() {
         val tunningTones = tunningTonesEditText.text.toString()
 
         if (inputCheck(tunningName, tunningTones)) {
-            // Create Tunning Object
             val tunning = Tunning(0, tunningName, tunningTones)
-            // Add Data to Database
             mTunningViewModel.addTunning(tunning)
             Toast.makeText(requireContext(), "Tunning added", Toast.LENGTH_SHORT).show()
-            // Navigate back
             findNavController().navigate(R.id.action_addFragment_to_listFragment)
         } else {
             Toast.makeText(requireContext(), "Input fields are empty", Toast.LENGTH_SHORT).show()

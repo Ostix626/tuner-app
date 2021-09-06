@@ -68,19 +68,6 @@
         />
 
 
-
-<!--    <TextView-->
-<!--        android:id="@+id/probability"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text=""-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/frequency"-->
-<!--        app:layout_constraintVertical_bias="0.109" />-->
-
     <LinearLayout
         android:id="@+id/centsLinearLayout"
         android:layout_width="match_parent"
@@ -104,13 +91,6 @@
             android:textColor="@color/grey"
             android:text="0 cents"
             android:textSize="26dp" />
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16dp"-->
-<!--            android:text=" cents"-->
-<!--            />-->
 
     </LinearLayout>
 
@@ -137,27 +117,8 @@
             android:textColor="@color/grey"
             android:textAlignment="textEnd"
             android:textSize="26dp" />
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16dp"-->
-<!--            android:text="frequency: "-->
-<!--            />-->
     </LinearLayout>
 
-    <!--    <Button-->
-<!--        android:id="@+id/chooseTunningButton"-->
-<!--        style="@style/Widget.MaterialComponents.Button.OutlinedButton"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="24dp"-->
-<!--        android:text="Button"-->
-<!--        android:textColor="@color/teal"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:strokeColor="@color/teal" />-->
 
 
 

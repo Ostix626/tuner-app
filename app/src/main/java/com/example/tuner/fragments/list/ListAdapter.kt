@@ -49,30 +49,6 @@ class ListAdapter (private var mContext: Context): RecyclerView.Adapter<ListAdap
             holder.itemView.context.startActivity(intent)
         }
 
-
-//        holder.itemView.tunningItem.setOnClickListener {
-//            val intent = Intent(holder.itemView.context, MainActivity::class.java)
-//            val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-//            pref.putString("tunning_name", currentItem.tunningName)
-//            pref.putString("tunning_tones", currentItem.tunningTones)
-//            pref.apply()
-////            intent.putExtra("tunning_name", currentItem.tunningName)
-////            intent.putExtra("tunning_tones", currentItem.tunningTones)
-//        }
-
-
-//        holder.itemView.setOnClickListener(View.OnClickListener {
-//             val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
-//            pref.putString("profileId", user.getUid())
-//            pref.apply()
-//
-//            val prefs = user.getUid()
-//
-//            val intent = Intent(holder.itemView.context, ProfileActivity::class.java)
-//            intent.putExtra("uid", prefs)
-//            mContext.startActivity(intent)
-//        })
-
     }
 
     override fun getItemCount(): Int {

@@ -124,13 +124,4 @@ enum class ChromaticScale(
     Bb8("A#/Bb", 8, 7458.62f, true),
     B8("B", 8, 7902.13f);
 
-//    val formattedFrequency by lazy { FREQUENCY_FORMAT.format(frequency) }
-//
-//    companion object {
-//        const val FREQUENCY_FORMAT = "%.2f"
-//
-//        val notes by lazy {
-//            values().sortedBy { it.frequency }
-//        }
-//    }
 }
